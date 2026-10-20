@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frações interativas — Rascunho</title>
+  <meta name="description" content="Aprenda frações de forma interativa: o que são, como ler e escrever, comparar, simplificar, somar e subtrair.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Padrões SVG compartilhados (hachuras/pontos) para não depender só da cor -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="pat-a" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
+        <rect class="pa-bg" width="10" height="10"/>
+        <line class="pa-ln" x1="0" y1="0" x2="0" y2="10" stroke-width="4"/>
+      </pattern>
+      <pattern id="pat-b" patternUnits="userSpaceOnUse" width="10" height="10">
+        <rect class="pb-bg" width="10" height="10"/>
+        <circle class="pb-dot" cx="5" cy="5" r="2.2"/>
+      </pattern>
+      <pattern id="pat-r" patternUnits="userSpaceOnUse" width="10" height="10">
+        <rect class="pr-bg" width="10" height="10"/>
+        <path class="pr-ln" d="M0 5H10M5 0V10" stroke-width="1.6"/>
+      </pattern>
+      <pattern id="pat-x" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(-45)">
+        <rect class="px-bg" width="8" height="8"/>
+        <line class="px-ln" x1="0" y1="0" x2="0" y2="8" stroke-width="1.5"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <div class="topo-in">
+      <button id="btnMenu" class="btn-menu" aria-expanded="false" aria-controls="indice">☰ <span>Índice</span></button>
+      <h1 class="logo"><span class="logo-frac" aria-hidden="true"><span>1</span><span>2</span></span> Frações interativas</h1>
+      <span class="tag-rascunho">Rascunho</span>
+      <button id="btnContraste" class="btn-contraste" aria-pressed="false" title="Alternar alto contraste">◐ <span>Alto contraste</span></button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav id="indice" class="indice" aria-label="Índice da lição">
+      <p class="indice-tit">Lição 1 · Introdução</p>
+      <ol>
+        <li><a href="#o-que-sao">O que são frações?</a></li>
+        <li><a href="#escrever">Como escrever frações</a></li>
+        <li><a href="#ler">Como ler frações</a></li>
+        <li><a href="#mistos">Números mistos <small>🚧</small></a></li>
+        <li><a href="#inteiras">Frações que valem um inteiro <small>🚧</small></a></li>
+      </ol>
+      <p class="indice-tit">Lição 2 · Comparar e simplificar</p>
+      <ol start="6">
+        <li><a href="#comparar">Comparar frações <small>🚧</small></a></li>
+        <li><a href="#simplificar">Simplificar frações <small>🚧</small></a></li>
+        <li><a href="#improprias">Mistos e impróprias <small>🚧</small></a></li>
+      </ol>
+      <p class="indice-tit">Lição 3 · Somar e subtrair</p>
+      <ol start="9">
+        <li><a href="#montar">Montando a conta</a></li>
+        <li><a href="#mesmo-den">Mesmo denominador</a></li>
+        <li><a href="#den-diferentes">Denominadores diferentes</a></li>
+        <li><a href="#praticar-soma">Pratique: soma e subtração</a></li>
+        <li><a href="#mistos-soma">Somar números mistos <small>🚧</small></a></li>
+      </ol>
+      <p class="legenda-indice"><small>🚧 = em construção no rascunho</small></p>
+    </nav>
+
+    <main id="conteudo" tabindex="-1">
+      <section class="intro cartao">
+        <p><strong>Bem-vindo!</strong> Esta página é um <strong>rascunho</strong> para aprovação. As seções de introdução, leitura/escrita e <strong>soma e subtração</strong> já são interativas; as marcadas com 🚧 estão em construção.</p>
+        <p class="legenda">
+          <span class="chip chip-a">▨ Fração A</span>
+          <span class="chip chip-b">⠿ Fração B</span>
+          <span class="chip chip-r">▦ Resultado</span>
+          <span class="chip chip-x">╳ Retirado</span>
+        </p>
+        <p class="nota">As cores foram escolhidas para serem distinguíveis por pessoas com daltonismo, e cada cor também tem um <strong>padrão</strong> (listras, pontos, grade) — você nunca precisa depender só da cor.</p>
+      </section>
+
+      <!-- ============ LIÇÃO 1 ============ -->
+      <section id="o-que-sao" class="cartao">
+        <h2><span class="num-sec">1</span> O que são frações?</h2>
+        <p>Uma <strong>fração</strong> é uma parte de um inteiro. Ela é menor que 1 inteiro, mas maior que 0. Usamos frações o tempo todo: “meio quilo de carne”, “o tanque está pela metade”… São partes do total — um quilo inteiro, um tanque inteiro.</p>
+        <p>Frações parecem contas de divisão, mas não são problemas para resolver: são uma forma de <strong>expressar uma quantidade</strong>.</p>
+
+        <h3>🍕 A pizza</h3>
+        <p>Escolha em quantas fatias dividir a pizza e <strong>toque nas fatias</strong> para pegá-las.</p>
+        <div class="pizza-area">
+          <div class="controle-partes" role="group" aria-label="Número de fatias">
+            <span class="rotulo">Fatias:</span>
+            <div id="pizzaPartes" class="botoes-partes"></div>
+          </div>
+          <div class="pizza-grid">
+            <div id="pizzaSvg" class="pizza-svg"></div>
+            <div class="pizza-info" aria-live="polite">
+              <p class="pequeno">Você pegou</p>
+              <div id="pizzaFracao" class="frac-grande"></div>
+              <p id="pizzaLeitura" class="leitura"></p>
+              <p id="pizzaExplica" class="explica"></p>
+              <button id="pizzaLimpar" class="btn btn-sec">↺ Devolver as fatias</button>
+            </div>
+          </div>
+        </div>
+
+        <h3>☕ A jarra de café</h3>
+        <p>Esta jarra comporta <strong>4 xícaras</strong> de café. Conforme a manhã passa, ela vai esvaziando.</p>
+        <div class="jarra-grid">
+          <div id="jarraSvg" class="jarra-svg"></div>
+          <div class="jarra-info" aria-live="polite">
+            <div id="jarraFracao" class="frac-grande"></div>
+            <p id="jarraTexto" class="leitura"></p>
+            <div id="xicaras" class="xicaras" aria-label="Xícaras servidas"></div>
+            <div class="botoes">
+              <button id="jarraServir" class="btn">☕ Servir uma xícara</button>
+              <button id="jarraEncher" class="btn btn-sec">↺ Encher a jarra</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="escrever" class="cartao">
+        <h2><span class="num-sec">2</span> Como escrever frações</h2>
+        <p>Toda fração tem duas partes: o número de cima e o número de baixo. Em matemática eles se chamam <strong>numerador</strong> e <strong>denominador</strong>.</p>
+        <div class="anatomia">
+          <div class="frac-grande frac-anat" role="img" aria-label="Fração um oitavo: numerador 1, denominador 8">
+            <span class="num">1</span><span class="den">8</span>
+          </div>
+          <ul class="anat-lista">
+            <li><span class="seta">⬆</span> <strong>Numerador</strong> (em cima): quantas partes estamos considerando. Pegamos <strong>1</strong> fatia.</li>
+            <li><span class="seta">⬇</span> <strong>Denominador</strong> (embaixo): em quantas partes o inteiro foi dividido. A pizza tem <strong>8</strong> fatias.</li>
+          </ul>
+        </div>
+        <p>Se a mesma pizza fosse dividida em 12 fatias e você pegasse uma, seria <strong>1/12</strong> da pizza. Não importa a fração: o número de partes vai <strong>embaixo</strong> e as partes de que estamos falando vão <strong>em cima</strong>.</p>
+
+        <div class="pratique" id="exEscrever">
+          <h3>✏️ Pratique!</h3>
+          <p>Escreva a fração que representa a parte destacada (com listras).</p>
+          <div id="exEscFig" class="ex-fig"></div>
+          <div class="resposta">
+            <div class="entrada-frac">
+              <label class="sr" for="exEscN">Numerador</label>
+              <input id="exEscN" type="number" inputmode="numeric" min="0" aria-label="Numerador">
+              <span class="barra-frac" aria-hidden="true"></span>
+              <label class="sr" for="exEscD">Denominador</label>
+              <input id="exEscD" type="number" inputmode="numeric" min="1" aria-label="Denominador">
+            </div>
+            <div class="botoes">
+              <button class="btn" id="exEscVer">Verificar</button>
+              <button class="btn btn-sec" id="exEscNovo">Outra figura ↻</button>
+            </div>
+          </div>
+          <p id="exEscFb" class="feedback" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="ler" class="cartao">
+        <h2><span class="num-sec">3</span> Como ler frações</h2>
+        <p>Com uma pizza de oito fatias, cada fatia é <strong>1/8</strong> da pizza. Lemos assim: <strong>um oitavo</strong>.</p>
+        <p>O numerador é lido como um número comum (um, dois, três…). O denominador de 2 a 10 tem nome próprio (meio, terço, quarto…). Acima de 10, usamos a palavra <strong>avos</strong>: 1/12 é “um doze avos”. As exceções são 100 (centésimo) e 1000 (milésimo).</p>
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <caption>Frações mais usadas</caption>
+            <thead><tr><th scope="col">Fração</th><th scope="col">Como se lê</th></tr></thead>
+            <tbody id="tabelaLeitura"></tbody>
+          </table>
+        </div>
+        <p>Quando o numerador não é 1, leia contando: se 1/5 é “um quinto”, então 2/5 é “dois quintos” e 3/5 é “três quintos”.</p>
+
+        <div class="leitor">
+          <h3>🔊 Leitor de frações</h3>
+          <p>Digite uma fração e veja como se lê.</p>
+          <div class="leitor-linha">
+            <div class="entrada-frac">
+              <input id="leN" type="number" inputmode="numeric" min="0" value="3" aria-label="Numerador">
+              <span class="barra-frac" aria-hidden="true"></span>
+              <input id="leD" type="number" inputmode="numeric" min="1" value="5" aria-label="Denominador">
+            </div>
+            <p id="leSaida" class="leitura grande" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="pratique" id="exLer">
+          <h3>✏️ Pratique!</h3>
+          <p>Escreva a fração que corresponde ao texto:</p>
+          <p id="exLerTexto" class="texto-desafio"></p>
+          <div class="resposta">
+            <div class="entrada-frac">
+              <input id="exLerN" type="number" inputmode="numeric" min="0" aria-label="Numerador">
+              <span class="barra-frac" aria-hidden="true"></span>
+              <input id="exLerD" type="number" inputmode="numeric" min="1" aria-label="Denominador">
+            </div>
+            <div class="botoes">
+              <button class="btn" id="exLerVer">Verificar</button>
+              <button class="btn btn-sec" id="exLerNovo">Outro texto ↻</button>
+            </div>
+          </div>
+          <p id="exLerFb" class="feedback" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="mistos" class="cartao esqueleto">
+        <h2><span class="num-sec">4</span> Números mistos <span class="badge-obra">🚧 Em construção</span></h2>
+        <p>Às vezes vemos uma fração ao lado de um número inteiro: é um <strong>número misto</strong>. 2 ½ pizzas são 2 pizzas inteiras e ½ de outra — lemos “<strong>dois inteiros e um meio</strong>” (ou “dois e meio”). 1 ⅔ xícara se lê “um inteiro e dois terços”. O número inteiro vem sempre primeiro.</p>
+        <p class="previa">Prévia da versão completa: pizzas inteiras + fração desenhadas lado a lado e exercício “escreva o número misto”.</p>
+      </section>
+
+      <section id="inteiras" class="cartao esqueleto">
+        <h2><span class="num-sec">5</span> Frações que valem um inteiro <span class="badge-obra">🚧 Em construção</span></h2>
+        <p>Em 8/8 temos oito partes de oito: <strong>quando numerador e denominador são iguais, a fração vale 1</strong>. Por isso 8/8 e 2/2 parecem diferentes, mas são iguais: as duas valem um inteiro.</p>
+        <p class="previa">Prévia: comparação visual 8/8 = 2/2 = 1 e exercício “escreva a fração inteira”.</p>
+      </section>
+
+      <!-- ============ LIÇÃO 2 ============ -->
+      <section id="comparar" class="cartao esqueleto">
+        <h2><span class="num-sec">6</span> Comparar frações <span class="badge-obra">🚧 Em construção</span></h2>
+        <p>Com o <strong>mesmo denominador</strong>, é maior a fração com o maior numerador: 6/8 &gt; 5/8. Com <strong>denominadores diferentes</strong> (como 5/8 e 4/6), primeiro transformamos as frações para terem o mesmo denominador usando o <strong>menor denominador comum (MMC)</strong>: 5/8 = 15/24 e 4/6 = 16/24, logo 4/6 é maior.</p>
+        <p class="previa">Prévia: comparador interativo com barras lado a lado.</p>
+      </section>
+
+      <section id="simplificar" class="cartao esqueleto">
+        <h2><span class="num-sec">7</span> Simplificar frações <span class="badge-obra">🚧 Em construção</span></h2>
+        <p>4/8 e 1/2 têm o mesmo valor. <strong>Simplificar</strong> é dividir numerador e denominador pelo mesmo número: 16/20 → 8/10 → 4/5; 6/9 ÷ 3 = 2/3. O maior número que divide os dois é o <strong>MDC</strong>. Uma fração que não pode mais ser simplificada é <strong>irredutível</strong>.</p>
+        <p class="previa">Prévia: simplificador passo a passo e exercícios.</p>
+      </section>
+
+      <section id="improprias" class="cartao esqueleto">
+        <h2><span class="num-sec">8</span> Números mistos e frações impróprias <span class="badge-obra">🚧 Em construção</span></h2>
+        <p>Para transformar 1 ¼ em fração imprópria: 1 × 4 = 4; 4 + 1 = 5 → <strong>5/4</strong>. Outro: 2 ⅖ → 2 × 5 = 10; 10 + 2 = 12 → <strong>12/5</strong>. Para o caminho inverso, divida: 10/4 = 2 inteiros e sobram 2 → <strong>2 2/4</strong>; 33/3 = <strong>11</strong>.</p>
+        <p class="previa">Prévia: conversor interativo nos dois sentidos.</p>
+      </section>
+
+      <!-- ============ LIÇÃO 3 ============ -->
+      <section id="montar" class="cartao">
+        <h2><span class="num-sec">9</span> Somar e subtrair: montando a conta</h2>
+        <p>Na vida real precisamos somar e subtrair frações. Você já andou ½ km até o trabalho e depois mais ½ km de volta? Ou tirou ¼ de litro de um tanque que tinha ¾? Sem perceber, você estava somando e subtraindo frações.</p>
+        <div class="exemplo-historia">
+          <p>🎂 Uma receita de bolo pede <span class="fr-inline a">3/5</span> de xícara de óleo na massa e mais <span class="fr-inline b">1/5</span> de xícara para untar a forma. Quanto óleo no total?</p>
+          <div id="montarConta" class="conta-montada"></div>
+          <p>Ao somar frações com o mesmo denominador, somamos <strong>só os numeradores</strong> (os números de cima). O denominador mostra quantas partes formam um inteiro — e isso <strong>não muda</strong>: a xícara continua dividida em 5 partes.</p>
+        </div>
+      </section>
+
+      <section id="mesmo-den" class="cartao">
+        <h2><span class="num-sec">10</span> Somar e subtrair com o mesmo denominador</h2>
+        <p>Se você sabe somar e subtrair números inteiros, já sabe fazer com frações! Escolha um exemplo da lição ou monte o seu na calculadora visual mais abaixo.</p>
+        <div class="regra">
+          <p><strong>Regra:</strong> some (ou subtraia) os numeradores e <strong>mantenha o denominador</strong>.</p>
+          <p class="regra-ex"><span class="fr-inline a">3/5</span> + <span class="fr-inline b">1/5</span> = <span class="fr-inline r">4/5</span> &nbsp;·&nbsp; <span class="fr-inline a">3/4</span> − <span class="fr-inline b">1/4</span> = <span class="fr-inline r">2/4</span></p>
+        </div>
+        <h3>📉 Simplifique o resultado</h3>
+        <p>Depois de somar ou subtrair, às vezes dá para simplificar. Por exemplo: ¼ + ¼ = 2/4. Como 2 e 4 podem ser divididos por 2, simplificamos 2/4 para <strong>1/2</strong>. É sempre melhor deixar a resposta na forma mais simples.</p>
+      </section>
+
+      <section id="den-diferentes" class="cartao">
+        <h2><span class="num-sec">11</span> Denominadores diferentes</h2>
+        <p>A receita pode pedir ¼ de xícara de leite e depois mais ⅓ de xícara. Só podemos somar ou subtrair frações com o <strong>mesmo denominador</strong>. Então primeiro encontramos o <strong>menor denominador comum</strong> — o <strong>MMC</strong> (mínimo múltiplo comum) dos denominadores — e transformamos as frações. Depois é só somar ou subtrair normalmente.</p>
+
+        <div class="calc" id="calc">
+          <h3>🧮 Calculadora visual passo a passo</h3>
+          <div class="exemplos" role="group" aria-label="Exemplos da lição">
+            <span class="rotulo">Exemplos da lição:</span>
+            <div id="exemplosBtns" class="exemplos-btns"></div>
+          </div>
+          <div class="calc-entrada">
+            <div class="frac-editor a" aria-label="Fração A">
+              <span class="ed-tit">A</span>
+              <div class="stepper"><button data-alvo="an" data-d="-1" aria-label="Diminuir numerador de A">−</button><output id="an">1</output><button data-alvo="an" data-d="1" aria-label="Aumentar numerador de A">+</button></div>
+              <span class="barra-frac" aria-hidden="true"></span>
+              <div class="stepper"><button data-alvo="ad" data-d="-1" aria-label="Diminuir denominador de A">−</button><output id="ad">4</output><button data-alvo="ad" data-d="1" aria-label="Aumentar denominador de A">+</button></div>
+            </div>
+            <div class="op-sel" role="radiogroup" aria-label="Operação">
+              <button id="opMais" role="radio" aria-checked="true" aria-label="Somar">+</button>
+              <button id="opMenos" role="radio" aria-checked="false" aria-label="Subtrair">−</button>
+            </div>
+            <div class="frac-editor b" aria-label="Fração B">
+              <span class="ed-tit">B</span>
+              <div class="stepper"><button data-alvo="bn" data-d="-1" aria-label="Diminuir numerador de B">−</button><output id="bn">1</output><button data-alvo="bn" data-d="1" aria-label="Aumentar numerador de B">+</button></div>
+              <span class="barra-frac" aria-hidden="true"></span>
+              <div class="stepper"><button data-alvo="bd" data-d="-1" aria-label="Diminuir denominador de B">−</button><output id="bd">3</output><button data-alvo="bd" data-d="1" aria-label="Aumentar denominador de B">+</button></div>
+            </div>
+          </div>
+          <div id="calcPassos" class="passos" aria-live="polite"></div>
+          <div class="botoes centro">
+            <button id="passoProx" class="btn">Próximo passo ▶</button>
+            <button id="passoTudo" class="btn btn-sec">Mostrar tudo</button>
+            <button id="passoReini" class="btn btn-sec">↺ Recomeçar</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="praticar-soma" class="cartao">
+        <h2><span class="num-sec">12</span> Pratique: soma e subtração</h2>
+        <div class="pratique" id="exSoma">
+          <div class="niveis" role="radiogroup" aria-label="Nível">
+            <button role="radio" aria-checked="true" data-nivel="1">Mesmo denominador</button>
+            <button role="radio" aria-checked="false" data-nivel="2">Denominadores diferentes</button>
+            <button role="radio" aria-checked="false" data-nivel="3">Misturado</button>
+          </div>
+          <p class="placar" aria-live="polite">Acertos: <strong id="placarOk">0</strong> de <strong id="placarTot">0</strong></p>
+          <div id="exSomaConta" class="conta-ex"></div>
+          <div class="resposta">
+            <div class="entrada-frac">
+              <input id="exSomaN" type="number" inputmode="numeric" min="0" aria-label="Numerador da resposta">
+              <span class="barra-frac" aria-hidden="true"></span>
+              <input id="exSomaD" type="number" inputmode="numeric" min="1" aria-label="Denominador da resposta">
+            </div>
+            <div class="botoes">
+              <button class="btn" id="exSomaVer">Verificar</button>
+              <button class="btn btn-sec" id="exSomaDica">💡 Ver solução</button>
+              <button class="btn btn-sec" id="exSomaNovo">Nova conta ↻</button>
+            </div>
+          </div>
+          <p class="nota">Dê a resposta na forma mais simples.</p>
+          <div id="exSomaFb" class="feedback" role="status" aria-live="polite"></div>
+          <div id="exSomaSol" class="solucao" hidden></div>
+        </div>
+      </section>
+
+      <section id="mistos-soma" class="cartao esqueleto">
+        <h2><span class="num-sec">13</span> Somar e subtrair números mistos <span class="badge-obra">🚧 Em construção</span></h2>
+        <p>Números mistos não são fáceis de somar diretamente, então primeiro os transformamos em <strong>frações impróprias</strong> (numerador maior que o denominador). Exemplo: 2 ⅗ + 1 ⅗. Para 2 ⅗: 2 × 5 = 10; 10 + 3 = 13 → 13/5. Para 1 ⅗: 1 × 5 = 5; 5 + 3 = 8 → 8/5. Agora: 13/5 + 8/5 = <strong>21/5</strong> = <strong>4 ⅕</strong>.</p>
+        <p class="previa">Prévia: passo a passo animado da conversão e exercícios.</p>
+      </section>
+
+      <footer class="rodape">
+        <p>Conteúdo adaptado e traduzido das lições de frações do <strong>LearnFree</strong> (GCFGlobal). Ilustrações geradas em SVG.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
